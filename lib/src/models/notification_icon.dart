@@ -23,7 +23,7 @@ class NotificationIcon {
     logger.v("iconDataToDrawableIconName - Correct icon data: " +
         iconData.toString());
 
-    final relative_path = "android/app/src/main/res/drawable/";
+    final relative_path = "resource://drawable/";
     final icon_name = codePointToIconName[iconData.codePoint] ?? "ac_unit";
     return relative_path + "icon_" + icon_name;
   }
