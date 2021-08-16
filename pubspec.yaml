@@ -18,6 +18,7 @@ dependencies:
   #platform: any
   
   intl: any
+  logger: ^1.0.0
 
 dev_dependencies:
   flutter_test:

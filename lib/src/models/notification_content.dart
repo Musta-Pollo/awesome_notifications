@@ -26,6 +26,7 @@ class NotificationContent extends BaseNotificationContent {
   String? displayedDate;
 
   bool? locked;
+  IconData? iconData;
 
   NotificationContent(
       {int? id,
@@ -42,6 +43,7 @@ class NotificationContent extends BaseNotificationContent {
       Color? color,
       Color? backgroundColor,
       Map<String, String>? payload,
+      IconData? iconData,
       this.notificationLayout,
       this.hideLargeIconOnExpand,
       this.locked,
@@ -55,20 +57,22 @@ class NotificationContent extends BaseNotificationContent {
       this.displayOnBackground,
       this.displayedDate})
       : super(
-            id: id,
-            channelKey: channelKey,
-            title: title,
-            body: body,
-            summary: summary,
-            showWhen: showWhen,
-            payload: payload,
-            icon: icon,
-            largeIcon: largeIcon,
-            bigPicture: bigPicture,
-            customSound: customSound,
-            autoCancel: autoCancel,
-            color: color,
-            backgroundColor: backgroundColor);
+          id: id,
+          channelKey: channelKey,
+          title: title,
+          body: body,
+          summary: summary,
+          showWhen: showWhen,
+          payload: payload,
+          icon: icon,
+          largeIcon: largeIcon,
+          bigPicture: bigPicture,
+          customSound: customSound,
+          autoCancel: autoCancel,
+          color: color,
+          backgroundColor: backgroundColor,
+          iconData: iconData,
+        );
 
   @override
   NotificationContent? fromMap(Map<String, dynamic> mapData) {

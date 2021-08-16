@@ -4,6 +4,10 @@ import 'package:awesome_notifications/src/utils/assert_utils.dart';
 import 'package:awesome_notifications/src/utils/bitmap_utils.dart';
 import 'package:awesome_notifications/src/utils/html_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+import 'dart:io' as io;
+
+import 'notification_icon.dart';
 
 class BaseNotificationContent extends Model {
   int? id;
@@ -21,22 +25,25 @@ class BaseNotificationContent extends Model {
   Color? color;
   Color? backgroundColor;
   NotificationPrivacy? privacy;
+  IconData? iconData;
 
-  BaseNotificationContent(
-      {this.id,
-      this.channelKey,
-      this.title,
-      this.body,
-      this.summary,
-      this.showWhen,
-      this.icon,
-      this.largeIcon,
-      this.bigPicture,
-      this.autoCancel,
-      this.color,
-      this.backgroundColor,
-      this.payload,
-      this.customSound});
+  BaseNotificationContent({
+    this.id,
+    this.channelKey,
+    this.title,
+    this.body,
+    this.summary,
+    this.showWhen,
+    this.icon,
+    this.largeIcon,
+    this.bigPicture,
+    this.autoCancel,
+    this.color,
+    this.backgroundColor,
+    this.payload,
+    this.customSound,
+    this.iconData,
+  });
 
   @override
   BaseNotificationContent? fromMap(Map<String, dynamic> mapData) {
@@ -54,6 +61,24 @@ class BaseNotificationContent extends Model {
     this.autoCancel = AssertUtils.extractValue<bool>(mapData, 'autoCancel');
     this.privacy = AssertUtils.extractEnum<NotificationPrivacy>(
         mapData, 'privacy', NotificationPrivacy.values);
+
+    //Check that only one type of icon is specified
+    var logger = Logger(
+      printer: PrettyPrinter(
+          colors: io.stdout.supportsAnsiEscapes,
+          printEmojis: true,
+          lineLength: io.stdout.terminalColumns),
+    );
+
+    if (this.icon != null && this.icon!.isNotEmpty) {
+      assert(this.iconData == null);
+      logger.i(this.icon);
+    } else if (this.iconData != null) {
+      assert(this.icon == null || this.icon!.isEmpty);
+      logger.i(this.iconData);
+      icon = NotificationIcon().iconDataToDrawableIconName(iconData);
+      logger.i(this.icon);
+    }
 
     int? colorValue = AssertUtils.extractValue<int>(mapData, 'color');
     this.color = colorValue == null ? null : Color(colorValue);
