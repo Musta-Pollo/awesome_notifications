@@ -25,7 +25,7 @@ class NotificationIcon {
 
     final relative_path = "android/app/src/main/res/drawable/";
     final icon_name = codePointToIconName[iconData.codePoint] ?? "ac_unit";
-    return relative_path + icon_name;
+    return relative_path + "icon_" + icon_name;
   }
 }
 
